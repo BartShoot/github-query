@@ -1,1 +1,2 @@
 spring.application.name=github-query
+github.api-key=
