@@ -1,5 +1,6 @@
 notes.md
 src/main/resources/application.properties
+logs
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
