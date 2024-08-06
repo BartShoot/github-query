@@ -1,4 +1,6 @@
-package com.bartshoot.github_query.clients;
+package com.bartshoot.github_query.services;
+
+import com.bartshoot.github_query.clients.GitHubErrorResponse;
 
 public class GitHubApiException extends RuntimeException {
     private final GitHubErrorResponse errorResponse;

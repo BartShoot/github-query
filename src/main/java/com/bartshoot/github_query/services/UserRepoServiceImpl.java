@@ -1,6 +1,5 @@
 package com.bartshoot.github_query.services;
 
-import com.bartshoot.github_query.clients.GitHubApiException;
 import com.bartshoot.github_query.clients.GitHubClient;
 import com.bartshoot.github_query.clients.GitHubErrorResponse;
 import com.bartshoot.github_query.models.Branch;
@@ -64,6 +63,13 @@ public class UserRepoServiceImpl implements UserRepoService {
         return results;
     }
 
+    private static <T> boolean hasNextPage(ResponseEntity<T> currentResponse) {
+        if (currentResponse.getHeaders().get("link") == null) {
+            return false;
+        }
+        return currentResponse.getHeaders().get("link").stream().anyMatch(s -> s.contains("; rel=\"next\""));
+    }
+
     private GitHubErrorResponse parseErrorResponse(HttpClientErrorException e) {
         String json = e.getMessage().substring(e.getMessage().indexOf('{'));
         try {
@@ -76,12 +82,5 @@ public class UserRepoServiceImpl implements UserRepoService {
         } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    private static <T> boolean hasNextPage(ResponseEntity<T> currentResponse) {
-        if (currentResponse.getHeaders().get("link") == null) {
-            return false;
-        }
-        return currentResponse.getHeaders().get("link").stream().anyMatch(s -> s.contains("; rel=\"next\""));
     }
 }

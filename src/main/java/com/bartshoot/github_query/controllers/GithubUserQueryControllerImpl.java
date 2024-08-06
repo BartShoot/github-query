@@ -1,6 +1,7 @@
 package com.bartshoot.github_query.controllers;
 
-import com.bartshoot.github_query.clients.GitHubApiException;
+import com.bartshoot.github_query.services.GitHubApiException;
+import com.bartshoot.github_query.models.ApiError;
 import com.bartshoot.github_query.models.RepositoryFront;
 import com.bartshoot.github_query.services.UserRepoService;
 import org.springframework.web.bind.annotation.ExceptionHandler;
