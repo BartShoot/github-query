@@ -69,7 +69,7 @@ public class UserRepoServiceImpl implements UserRepoService {
         try {
             GitHubErrorResponse gitHubErrorResponse = objectMapper.readValue(json, GitHubErrorResponse.class);
             if (gitHubErrorResponse.status() == 0) {
-                gitHubErrorResponse = new GitHubErrorResponse( e.getStatusCode().value(), gitHubErrorResponse.message(),
+                gitHubErrorResponse = new GitHubErrorResponse(e.getStatusCode().value(), gitHubErrorResponse.message(),
                         gitHubErrorResponse.documentation_url());
             }
             return gitHubErrorResponse;

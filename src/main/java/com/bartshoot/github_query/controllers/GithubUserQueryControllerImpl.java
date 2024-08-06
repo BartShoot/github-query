@@ -23,7 +23,7 @@ public class GithubUserQueryControllerImpl implements GithubUserQueryController 
     }
 
     @ExceptionHandler
-    public ApiError handle(GitHubApiException e) {
+    public ApiError handleError(GitHubApiException e) {
         return new ApiError(e.getErrorResponse().status(), e.getErrorResponse().message());
     }
 }
