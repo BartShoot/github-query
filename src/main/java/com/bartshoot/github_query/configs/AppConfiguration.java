@@ -1,4 +1,4 @@
-package com.bartshoot.github_query.config;
+package com.bartshoot.github_query.configs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

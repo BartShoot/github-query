@@ -2,15 +2,15 @@ package com.bartshoot.github_query.models;
 
 public class BranchFront {
     private final String name;
-    private final String sha;
+    private final String lastCommitSha;
 
     public BranchFront(Branch branch) {
         this.name = branch.name();
-        this.sha = branch.commit().sha();
+        this.lastCommitSha = branch.commit().sha();
     }
 
-    public String getSha() {
-        return sha;
+    public String getLastCommitSha() {
+        return lastCommitSha;
     }
 
     public String getName() {

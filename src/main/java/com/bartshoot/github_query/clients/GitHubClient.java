@@ -1,4 +1,4 @@
-package com.bartshoot.github_query.client;
+package com.bartshoot.github_query.clients;
 
 import com.bartshoot.github_query.models.Branch;
 import com.bartshoot.github_query.models.Repository;

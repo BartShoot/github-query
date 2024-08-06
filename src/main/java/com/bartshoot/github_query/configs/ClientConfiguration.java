@@ -1,6 +1,6 @@
-package com.bartshoot.github_query.config;
+package com.bartshoot.github_query.configs;
 
-import com.bartshoot.github_query.client.GitHubClient;
+import com.bartshoot.github_query.clients.GitHubClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +13,14 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @PropertySource("classpath:application.properties")
 public class ClientConfiguration {
 
-    @Value("github.api-key")
+    @Value("${github.api-key}")
     private String gitHubApiKey;
 
     @Bean
     GitHubClient gitHubClient() {
         RestClient.Builder restClient = RestClient.builder().baseUrl("https://api.github.com/");
         if (!gitHubApiKey.isBlank()) {
-            restClient.defaultHeader("Authentication", "Bearer " + gitHubApiKey);
+            restClient.defaultHeader("Authorization", "Bearer " + gitHubApiKey);
         }
         RestClientAdapter adapter = RestClientAdapter.create(restClient.build());
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
