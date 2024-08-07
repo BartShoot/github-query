@@ -1,5 +1,5 @@
 notes.md
-/src/main/resources/application.propertie
+/src/main/resources/authentication.properties
 logs
 
 target/
