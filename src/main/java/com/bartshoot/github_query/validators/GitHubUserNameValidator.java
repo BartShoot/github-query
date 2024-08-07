@@ -13,7 +13,7 @@ public class GitHubUserNameValidator implements ConstraintValidator<ValidGitHubU
         boolean isValid = userName.matches("^[a-zA-Z\\\\d](?:[a-zA-Z\\\\d]|-(?=[a-zA-Z\\\\d])){0,38}$");
         if (!isValid) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Invalid username : " + userName)
+            context.buildConstraintViolationWithTemplate("Invalid username: " + userName)
                     .addConstraintViolation();
         }
         return isValid;

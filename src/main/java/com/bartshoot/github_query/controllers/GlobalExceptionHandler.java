@@ -18,7 +18,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HandlerMethodValidationException.class)
     public ResponseEntity<ApiError> handleError(HandlerMethodValidationException e) {
-        return ResponseEntity.status(400).body(new ApiError(400, e.getReason()));
+        StringBuilder errorMessage = new StringBuilder("Validation error: ");
+        e.getAllErrors().forEach(error -> errorMessage.append(error.getDefaultMessage()));
+        return ResponseEntity.status(400).body(new ApiError(400, errorMessage.toString().trim()));
     }
 
     @ExceptionHandler(Exception.class)

@@ -23,12 +23,22 @@ public class GitHubClientImp implements GitHubClient {
 
     @Override
     public List<Branch> getRepoBranches(String userName, Repository repository) {
-        return getPaginatedResults(page -> gitHubPaginatedClient.getRepoBranches(userName, repository.name(), page));
+        try {
+            return getPaginatedResults(
+                    page -> gitHubPaginatedClient.getRepoBranches(userName, repository.name(), page));
+        } catch (HttpClientErrorException e) {
+            throw new GitHubApiException(
+                    parseErrorResponse(e, "Repository " + userName + "/" + repository.name() + " branches"));
+        }
     }
 
     @Override
     public List<Repository> getUserRepositories(String userName) {
-        return getPaginatedResults(page -> gitHubPaginatedClient.getUserRepositories(userName, page));
+        try {
+            return getPaginatedResults(page -> gitHubPaginatedClient.getUserRepositories(userName, page));
+        } catch (HttpClientErrorException e) {
+            throw new GitHubApiException(parseErrorResponse(e, "User " + userName));
+        }
     }
 
     private <T> List<T> getPaginatedResults(Function<Integer, ResponseEntity<List<T>>> apiCall) {
@@ -37,11 +47,7 @@ public class GitHubClientImp implements GitHubClient {
         boolean hasMorePages;
         int page = 1;
         do {
-            try {
-                currentResponse = apiCall.apply(page);
-            } catch (HttpClientErrorException e) {
-                throw new GitHubApiException(parseErrorResponse(e));
-            }
+            currentResponse = apiCall.apply(page);
             results.addAll(Objects.requireNonNull(currentResponse.getBody()));
             hasMorePages = hasNextPage(currentResponse);
             page++;
@@ -56,12 +62,12 @@ public class GitHubClientImp implements GitHubClient {
         return currentResponse.getHeaders().get("link").stream().anyMatch(s -> s.contains("; rel=\"next\""));
     }
 
-    private GitHubErrorResponse parseErrorResponse(HttpClientErrorException e) {
+    private GitHubErrorResponse parseErrorResponse(HttpClientErrorException e, String s) {
         GitHubErrorResponse gitHubErrorResponse = e.getResponseBodyAs(GitHubErrorResponse.class);
-        if (gitHubErrorResponse != null && gitHubErrorResponse.status() == 0) {
-            gitHubErrorResponse = new GitHubErrorResponse(e.getStatusCode().value(), gitHubErrorResponse.message(),
-                    gitHubErrorResponse.documentation_url());
-        }
-        return gitHubErrorResponse;
+        int status = gitHubErrorResponse != null ? gitHubErrorResponse.status() : 0;
+        return new GitHubErrorResponse(
+                status == 0 ? e.getStatusCode().value() : status,
+                s + " " + (gitHubErrorResponse != null ? gitHubErrorResponse.message() : ""),
+                gitHubErrorResponse != null ? gitHubErrorResponse.documentation_url() : null);
     }
 }
