@@ -6,7 +6,7 @@
 # Configuration
 
 Copy and rename `src/main/resources/authentication.properties_TEMPLATE`
-to `src/main/resources/authentication.properties`.
+to `src/main/resources/authentication.properties`
 
 If you find yourself going against GitHub API rate limit fill `github.api-key` with your
 own [Personal access token.](https://github.com/settings/tokens)
@@ -29,13 +29,15 @@ own [Personal access token.](https://github.com/settings/tokens)
 
 Default address is `localhost:8080`
 
-`GET /user/{userName}/repos` - returns list of all repos that aren't forks with all branches and their latest commit sha.
+`GET /user/{userName}/repos` - returns list of all repos that aren't forks with all branches and their latest commit
+sha.
 
-Example: 
+Example:
 
 `GET: http://localhost:8080/user/bartshoot/repos`
 
 Response:
+
 ```json
 [
   {
