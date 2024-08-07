@@ -14,7 +14,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @PropertySource("classpath:authentication.properties")
 public class ClientConfiguration {
 
-    @Value("${github.api-key}")
+    @Value("${github.api-key:}")
     private String gitHubApiKey;
 
     @Bean
