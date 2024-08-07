@@ -45,6 +45,7 @@ public class UserRepoServiceImpl implements UserRepoService {
         return getPaginatedResults(page -> gitHubClient.getUserRepositories(userName, page));
     }
 
+    //TODO: Separate client and paginated client
     private <T> List<T> getPaginatedResults(Function<Integer, ResponseEntity<List<T>>> apiCall) {
         List<T> results = new ArrayList<>();
         ResponseEntity<List<T>> currentResponse;
