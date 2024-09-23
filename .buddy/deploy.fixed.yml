@@ -21,3 +21,19 @@
     cached_dirs:
     - /root/.m2/repository
     shell: BASH
+  - action: Transfer to droplet1
+    type: DIGITAL_OCEAN
+    input_type: BUILD_ARTIFACTS
+    local_path: /target
+    remote_path: /root
+    login: root
+    host: 188.166.165.154
+    host_name: droplet1
+    server_key: secure!3UsiPj1sYhaoBluE49i7Su4Mi6mtvX0mBaj0Um9qvlrMAHWJf1WNWbBxtO2O9t1EHo1h5qCT+rt357CerkZYeT5ytJIBMD94HcmS5VNh8cRiHn5SCDBJV/71iKJzJAmovgEGrtq3WJ5WAktVC8Otk6xaL3Z4Ofpzw2PwmKnuqtwdS696wllhlSFFxdR1wheFpI8G1Vcgl6CWHUAtxsBkSp19ojLDYZ17Rm3wZVunHAATXPKnMY8RXn/pQRVVWf3IA9UcPjY5w6XsF1uZqoh9vBKb199Hh7/gRUc8Qs6rtwqXREJIIgdkl2/kb+MhCuXOMn2v4X08AWX30dJ8tqtZrK4/E5Lr/nDrRxxdkoHf9gWr+VwcA7C+SCGlE32RwI/07N+X0f5SzfN6RT2dfvmWiC4yjtnoEi9qS650WqymAki+A/V8Kh/+too/M6Y51eUKesGV9slUYlM4Rmm5ySTwSzUKwxeEfEPIbx4b7JBPR5EFWk6PpzO1jwEaPhsh38DTfq1Z/ZkMiAqZy1EBe6f56835pFE5wHKbVKDnz+Y7O814w0SC35fbGGgjt2iifwNs.EtObpKmbZWOJC7Rfgj7cQw==
+    authentication_mode: PRIVATE_KEY
+    integration: DigitalOcean
+    deployment_excludes:
+    - '*'
+    deployment_includes:
+    - github-query*
+    - classes
