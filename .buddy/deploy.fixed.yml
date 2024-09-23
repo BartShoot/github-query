@@ -37,3 +37,12 @@
     deployment_includes:
     - github-query*
     - classes
+  - action: "[dobija.top] Execute systemctl restart github-query.service"
+    type: SSH_COMMAND
+    login: root
+    host: dobija.top
+    server_key: secure!ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg==
+    authentication_mode: PRIVATE_KEY
+    commands:
+    - systemctl restart github-query.service
+    run_as_script: true
