@@ -21,3 +21,28 @@
     cached_dirs:
     - /root/.m2/repository
     shell: BASH
+  - action: Transfer to droplet1
+    type: DIGITAL_OCEAN
+    input_type: BUILD_ARTIFACTS
+    local_path: /target
+    remote_path: /root
+    login: root
+    host: 188.166.165.154
+    host_name: droplet1
+    server_key: secure!ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg==
+    authentication_mode: PRIVATE_KEY
+    integration: DigitalOcean
+    deployment_excludes:
+    - '*'
+    deployment_includes:
+    - github-query*
+    - classes
+  - action: "[dobija.top] Execute systemctl restart github-query.service"
+    type: SSH_COMMAND
+    login: root
+    host: dobija.top
+    server_key: secure!ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg==
+    authentication_mode: PRIVATE_KEY
+    commands:
+    - systemctl restart github-query.service
+    run_as_script: true
