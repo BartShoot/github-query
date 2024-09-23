@@ -33,10 +33,10 @@
     authentication_mode: PRIVATE_KEY
     integration: DigitalOcean
     deployment_excludes:
-    - generated-*
-    - maven-*
-    - surefure-*
-    - test-*
+    - /generated-*
+    - /maven-*
+    - /surefure-*
+    - /test-*
   - action: "[dobija.top] Execute systemctl restart github-query.service"
     type: SSH_COMMAND
     login: root
