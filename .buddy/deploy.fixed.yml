@@ -25,7 +25,7 @@
     type: DIGITAL_OCEAN
     input_type: BUILD_ARTIFACTS
     local_path: /target
-    remote_path: /root
+    remote_path: /root/projects/github-query
     login: root
     host: 188.166.165.154
     host_name: droplet1
@@ -33,10 +33,10 @@
     authentication_mode: PRIVATE_KEY
     integration: DigitalOcean
     deployment_excludes:
-    - '*'
-    deployment_includes:
-    - github-query*
-    - classes
+    - generated-*
+    - maven-*
+    - surefure-*
+    - test-*
   - action: "[dobija.top] Execute systemctl restart github-query.service"
     type: SSH_COMMAND
     login: root
