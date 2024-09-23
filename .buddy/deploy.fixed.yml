@@ -1,0 +1,23 @@
+- pipeline: deploy
+  events:
+  - type: PUSH
+    refs:
+    - refs/heads/main
+  fail_on_prepare_env_warning: true
+  actions:
+  - action: Create authentication.properties
+    type: BUILD
+    docker_image_name: library/ubuntu
+    docker_image_tag: 20.04
+    execute_commands:
+    - mkdir -p src/main/resources && echo "github.api-key=$GH_API_KEY" > src/main/resources/authentication.properties
+    shell: BASH
+  - action: mvn clean install
+    type: BUILD
+    docker_image_name: library/maven
+    docker_image_tag: latest
+    execute_commands:
+    - mvn clean install
+    cached_dirs:
+    - /root/.m2/repository
+    shell: BASH
