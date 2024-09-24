@@ -19,7 +19,7 @@ public class UserRepoServiceImpl implements UserRepoService {
     @Override
     public List<RepositoryFront> getRepos(String userName) {
         List<Repository> userRepositories = gitHubClient.getUserRepositories(userName);
-        return userRepositories.stream()
+        return userRepositories.parallelStream()
                 .filter(repository -> !repository.fork())
                 .map(repository -> new RepositoryFront(repository, gitHubClient.getRepoBranches(userName, repository)))
                 .toList();
