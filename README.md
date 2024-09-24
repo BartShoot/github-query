@@ -1,3 +1,8 @@
+# Live API
+
+Head to https://api.dobija.top/user/example/repos
+or use https://app.dobija.top/
+
 # Requirements
 
 - Java 21
@@ -25,6 +30,12 @@ own [Personal access token.](https://github.com/settings/tokens)
 .\mvnw spring-boot:run 
 ```
 
+## Local testing of fronted app
+
+```bash
+./mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--spring.profiles.active=local" 
+```
+and similar on linux.
 # Endpoints
 
 Default address is `localhost:8080`
