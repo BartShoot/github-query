@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 @Service
 public class GitHubClientImp implements GitHubClient {
@@ -42,17 +44,21 @@ public class GitHubClientImp implements GitHubClient {
     }
 
     private <T> List<T> getPaginatedResults(Function<Integer, ResponseEntity<List<T>>> apiCall) {
-        List<T> results = new ArrayList<>();
         ResponseEntity<List<T>> currentResponse;
-        boolean hasMorePages;
         int page = 1;
-        do {
-            currentResponse = apiCall.apply(page);
-            results.addAll(Objects.requireNonNull(currentResponse.getBody()));
-            hasMorePages = hasNextPage(currentResponse);
-            page++;
-        } while (hasMorePages);
+        currentResponse = apiCall.apply(page);
+        List<T> results = new ArrayList<>(Objects.requireNonNull(currentResponse.getBody()));
+        if (hasNextPage(currentResponse)) {
+            IntStream.range(2, getPageCount(currentResponse)).parallel().forEach(
+                    p -> results.addAll(Objects.requireNonNull(apiCall.apply(p).getBody())));
+        }
         return results;
+    }
+
+    private <T> int getPageCount(ResponseEntity<List<T>> currentResponse) {
+        String link = Arrays.stream(currentResponse.getHeaders().get("link").getFirst().split(",")).filter(
+                it -> it.contains("last")).findFirst().get();
+        return Integer.parseInt(link.substring(link.lastIndexOf("page=") + 5, link.indexOf(">;")));
     }
 
     private static <T> boolean hasNextPage(ResponseEntity<T> currentResponse) {
