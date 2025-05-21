@@ -32,6 +32,7 @@
     shell: BASH
   - action: Transfer to droplet1
     type: TRANSFER
+    disabled: true
     input_type: BUILD_ARTIFACTS
     local_path: /target
     deployment_excludes:
@@ -52,6 +53,7 @@
       integration: DigitalOcean
   - action: "[dobija.top] Execute systemctl restart github-query.service"
     type: SSH_COMMAND
+    disabled: true
     commands:
     - systemctl restart github-query.service
     targets:
