@@ -43,7 +43,6 @@
       integration: DigitalOcean
   - action: "[dobija.top] Execute systemctl restart github-query.service"
     type: SSH_COMMAND
-    disabled: true
     commands:
     - systemctl restart github-query.service
     targets:
