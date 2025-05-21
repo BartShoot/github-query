@@ -22,6 +22,7 @@
     shell: BASH
   - action: mvn clean install
     type: BUILD
+    disabled: true
     docker_image_name: library/maven
     docker_image_tag: latest
     execute_commands:
