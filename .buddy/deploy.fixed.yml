@@ -14,6 +14,7 @@
     shell: BASH
   - action: Create authentication.properties
     type: BUILD
+    disabled: true
     docker_image_name: library/ubuntu
     docker_image_tag: 20.04
     execute_commands:
