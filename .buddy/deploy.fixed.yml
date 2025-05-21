@@ -14,7 +14,6 @@
     shell: BASH
   - action: mvn clean install
     type: BUILD
-    disabled: true
     docker_image_name: library/maven
     docker_image_tag: latest
     execute_commands:
@@ -24,7 +23,6 @@
     shell: BASH
   - action: Transfer to droplet1
     type: TRANSFER
-    disabled: true
     input_type: BUILD_ARTIFACTS
     local_path: /target
     deployment_excludes:
