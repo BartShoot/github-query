@@ -5,6 +5,13 @@
     - refs/heads/main
   fail_on_prepare_env_warning: true
   actions:
+  - action: echo $GH_API_KEY
+    type: BUILD
+    docker_image_name: buddy/localshell
+    docker_image_tag: ubuntu_24.04
+    execute_commands:
+    - echo $GH_API_KEY
+    shell: BASH
   - action: Create authentication.properties
     type: BUILD
     docker_image_name: library/ubuntu
@@ -22,27 +29,36 @@
     - /root/.m2/repository
     shell: BASH
   - action: Transfer to droplet1
-    type: DIGITAL_OCEAN
+    type: TRANSFER
     input_type: BUILD_ARTIFACTS
     local_path: /target
-    remote_path: /root/projects/github-query
-    login: root
-    host: 188.166.165.154
-    host_name: droplet1
-    server_key: secure!ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg==
-    authentication_mode: PRIVATE_KEY
-    integration: DigitalOcean
     deployment_excludes:
     - /generated-*
     - /maven-*
     - /surefure-*
     - /test-*
+    targets:
+    - target: t_188_166_165_154
+      type: DIGITAL_OCEAN
+      name: 188.166.165.154
+      host: 188.166.165.154
+      path: /root/projects/github-query
+      auth:
+        method: SSH_KEY
+        username: root
+        key: '!encrypted ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg=='
+      integration: DigitalOcean
   - action: "[dobija.top] Execute systemctl restart github-query.service"
     type: SSH_COMMAND
-    login: root
-    host: dobija.top
-    server_key: secure!ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg==
-    authentication_mode: PRIVATE_KEY
     commands:
     - systemctl restart github-query.service
+    targets:
+    - target: dobija_top
+      type: SSH
+      name: dobija.top
+      host: dobija.top
+      auth:
+        method: SSH_KEY
+        username: root
+        key: '!encrypted ldW9lrcTQ5uNbG6VFBN/4Q==.MZWjBsmnM43/TPOMoZRmqg=='
     run_as_script: true
